@@ -22,5 +22,6 @@ function transaction<T>(store:'tracks'|'audio',mode:IDBTransactionMode,execute:(
 export async function getTracks():Promise<Track[]>{return transaction<Track[]>('tracks','readonly',s=>s.getAll())}
 export async function getAudio(id:string):Promise<Blob|undefined>{return transaction<Blob|undefined>('audio','readonly',s=>s.get(id))}
 export async function addTrack(file:File):Promise<Track>{const t:Track={id:crypto.randomUUID(),name:file.name.replace(/\.[^.]+$/,''),type:file.type,size:file.size,added:Date.now()};await transaction('audio','readwrite',s=>s.put(file,t.id));await transaction('tracks','readwrite',s=>s.put(t));return t}
+export async function replaceTrack(track:Track,file:File):Promise<Track>{const updated:Track={...track,name:file.name.replace(/\.[^.]+$/,''),type:file.type,size:file.size};await transaction('audio','readwrite',s=>s.put(file,track.id));await transaction('tracks','readwrite',s=>s.put(updated));return updated}
 export async function deleteTrack(id:string){await transaction('audio','readwrite',s=>s.delete(id));await transaction('tracks','readwrite',s=>s.delete(id))}
 export async function saveTrack(t:Track){await transaction('tracks','readwrite',s=>s.put(t))}
