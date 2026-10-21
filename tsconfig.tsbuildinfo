@@ -1,1 +1,1 @@
-{"root":["./src/app.tsx","./src/audiostatus.ts","./src/main.tsx","./src/storage.ts","./vite.config.ts"],"version":"5.7.3"}
+{"root":["./src/app.tsx","./src/audiostatus.ts","./src/main.tsx","./src/playbackqueue.ts","./src/storage.ts","./vite.config.ts"],"version":"5.7.3"}
